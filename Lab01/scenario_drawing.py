@@ -18,7 +18,7 @@ tilt_step = 20
 max_tilt = 60
 min_tilt = -60
 
-raindrop_count = 150
+raindrop_count = 200
 
 raindrop_x1 = [random.randint(0, window_width) for _ in range(raindrop_count)]
 raindrop_y1 = [random.randint(0, window_height) for _ in range(raindrop_count)]
@@ -26,7 +26,7 @@ raindrop_y1 = [random.randint(0, window_height) for _ in range(raindrop_count)]
 raindrop_x2 = [x for x in raindrop_x1]
 
 # random function is for random length raindrop
-raindrop_y2 = [y - random.randint(15, 35) for y in raindrop_y1]
+raindrop_y2 = [y - random.randint(30, 40) for y in raindrop_y1]
 
 pause_rain = False
 
@@ -117,7 +117,7 @@ def draw_rectangle(p1, p2, p3, p4, p5, p6, p7, p8):
     glEnd()
 
 def draw_background_trees():
-    # background Triangles (trees? may be?)
+    # background trees
     tree_left_x, tree_left_y = 0,(0+320)
     tree_right_x, tree_right_y = 50,(0+320)
     tree_top_x, tree_top_y = 25,(60+320)
@@ -181,14 +181,14 @@ def draw_raindrop():
         glVertex2f(raindrop_x1[i] + tilt, raindrop_y2[i])  # Length of raindrop
     glEnd()
 
-
 def animate_rain():
     global pause_rain, tilt
     if not pause_rain:
         for i in range(raindrop_count):
 
-            raindrop_x1[i] += tilt 
-            raindrop_x2[i] += tilt
+            if tilt != 0:
+                raindrop_x1[i] += tilt - random.randint(5,10)
+                raindrop_x2[i] += tilt + random.randint(5,10)
 
             raindrop_y1[i] -= rain_speed
             raindrop_y2[i] -= rain_speed
@@ -203,15 +203,14 @@ def animate_rain():
 
             if raindrop_y2[i] < 0:
                 raindrop_y1[i] = window_height
-                raindrop_y2[i] = window_height - random.randint(20, 30)
+                raindrop_y2[i] = window_height - random.randint(30, 40)
                 
                 # random for making the rain look natural after reaching boundary
                 raindrop_x1[i] = random.randint(0, window_width)
                 raindrop_x2[i] = raindrop_x1[i] + tilt
     
     glutPostRedisplay()
-    
-    
+        
 def draw_scenario():
     # drawing sky 
     glColor3f(sky_RGB, sky_RGB, sky_RGB) 
@@ -229,10 +228,10 @@ def draw_scenario():
     draw_house()
 
 def setup_projection():
-    glViewport(0, 0, window_width, window_height)                   # Define the portion of the window to render to
-    glMatrixMode(GL_PROJECTION)                                     # Switch to the projection matrix
-    glLoadIdentity()                                                # Reset the projection matrix
-    glOrtho(0.0, window_width, 0.0, window_height, 0.0, 1.0)        # Define a 2D orthographic projection
+    glViewport(0, 0, window_width, window_height)                  
+    glMatrixMode(GL_PROJECTION)                                     
+    glLoadIdentity()                                                
+    glOrtho(0.0, window_width, 0.0, window_height, 0.0, 1.0)        
     glMatrixMode(GL_MODELVIEW)  
 
 def display():
