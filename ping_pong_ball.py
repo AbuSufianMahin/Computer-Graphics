@@ -74,9 +74,9 @@ def mouse_event_listener(button, state, x, y):
             "y": convert_coordinate(y),
             "color": (random.random(), random.random(), random.random())
         }
-
         particles.append(new_info)
 
+        print(f"New Ball spawned at ({x}, {convert_coordinate(y)})")
 
 def draw_point(x,y, size=5):
     glPointSize(size)
