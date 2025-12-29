@@ -436,8 +436,8 @@ def animate():
                 bullet_missed += 1
                 print(f"Bullet missed: {bullet_missed}")
 
-                if bullet_missed >= missed_bullet_limit:
-                    game_over = True
+                # if bullet_missed >= missed_bullet_limit:
+                    # game_over = True
 
                 bullet_info.pop(key)
 
@@ -504,7 +504,7 @@ def showWindow():
     else:
         drawText(10, 770, f"Life Remaining: {life_remaining}")
         drawText(10, 750, f"Game Score: {game_score}")
-        drawText(10, 730, f"Missed Bullet: {bullet_missed}")
+        # drawText(10, 730, f"Missed Bullet: {bullet_missed}")
 
         if cheat_mode:
             drawText(10, 710, f"Cheat Mode: ON")
